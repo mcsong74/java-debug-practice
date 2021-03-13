@@ -5,6 +5,7 @@ import com.cybertek.dto.ProjectDTO;
 import com.cybertek.dto.TaskDTO;
 import com.cybertek.dto.UserDTO;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.service.ProjectService;
 import com.cybertek.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +61,7 @@ public class ProjectController {
 
 
     @GetMapping("/complete/{projectcode}")
-    public String completeProject(@PathVariable("projectcode") String projectcode){
+    public String completeProject(@PathVariable("projectcode") String projectcode) throws TicketingProjectException {
         projectService.complete(projectcode);
         return "redirect:/project/create";
     }
@@ -95,7 +96,7 @@ public class ProjectController {
     }
 
     @GetMapping("/manager/complete/{projectCode}")
-    public String manager_completed(@PathVariable("projectCode") String projectCode,Model model){
+    public String manager_completed(@PathVariable("projectCode") String projectCode,Model model) throws TicketingProjectException {
 
         projectService.complete(projectCode);
 
