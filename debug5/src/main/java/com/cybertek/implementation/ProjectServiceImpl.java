@@ -80,9 +80,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void complete(String projectCode) throws TicketingProjectException {
         Project project = projectRepository.findByProjectCode(projectCode);
-        if (project.equals(null)){
-            throw new TicketingProjectException("Project does not exist which project code = ["+projectCode+"] ");
-        }
+        // bug fix, set status complete when user click on Complete button in a project row
         project.setProjectStatus(Status.COMPLETE);
         projectRepository.save(project);
     }
