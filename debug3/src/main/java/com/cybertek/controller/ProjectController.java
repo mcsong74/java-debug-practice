@@ -44,7 +44,7 @@ public class ProjectController {
         return "/project/create";
     }
 
-    @PostMapping("/create-project")
+    @PostMapping("/create")
     public String insertProject(ProjectDTO project){
         projectService.save(project);
         return "redirect:/project/create";

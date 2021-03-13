@@ -51,11 +51,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDTO dto) {
+    public void save(UserDTO dto) throws TicketingProjectException {
 
         User foundUser = userRepository.findByUserName(dto.getUserName());
         dto.setEnabled(true);
-
+        if (foundUser != null){
+            throw new TicketingProjectException("User is already exists!!!");
+        }
        User obj =  mapperUtil.convert(dto,new User());
        obj.setPassWord(passwordEncoder.encode(obj.getPassWord()));
        userRepository.save(obj);
