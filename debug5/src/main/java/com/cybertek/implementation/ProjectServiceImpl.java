@@ -5,6 +5,7 @@ import com.cybertek.dto.UserDTO;
 import com.cybertek.entity.Project;
 import com.cybertek.entity.User;
 import com.cybertek.enums.Status;
+import com.cybertek.exception.TicketingProjectException;
 import com.cybertek.mapper.ProjectMapper;
 import com.cybertek.mapper.UserMapper;
 import com.cybertek.repository.ProjectRepository;
@@ -77,8 +78,12 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public void complete(String projectCode) {
+    public void complete(String projectCode) throws TicketingProjectException {
         Project project = projectRepository.findByProjectCode(projectCode);
+        if (project.equals(null)){
+            throw new TicketingProjectException("Project does not exist which project code = ["+projectCode+"] ");
+        }
+        project.setProjectStatus(Status.COMPLETE);
         projectRepository.save(project);
     }
 
